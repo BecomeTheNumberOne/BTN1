@@ -24,14 +24,21 @@ namespace BTN1.Controllers
             
 
             //Make a SELECT query against the Endpoint
-            SparqlResultSet results = endpoint.QueryWithResultSet("SELECT * WHERE {?iri a schema:Movie . ?iri foaf:name ?name .} LIMIT 20");
+            SparqlResultSet results = endpoint.QueryWithResultSet("SELECT * WHERE {?iri a schema:Movie . ?iri foaf:name ?name .}");
+            var data=new List<String>();
+
             foreach (SparqlResult result in results)
             {
                 Console.WriteLine(result.ToString());
+                data.Add(result.ToString());
+
             }
 
-
+            
+            
             Console.WriteLine("------------------------------------------------------------------");
+
+            /* 
             //Make a DESCRIBE query against the Endpoint
             IGraph g = endpoint.QueryWithResultGraph("DESCRIBE");
             //g.NamespaceMap.AddNamespace("schema", new Uri("http://schema.org/"));
@@ -39,8 +46,9 @@ namespace BTN1.Controllers
             {
                 Console.WriteLine(t.ToString());
             }
+            */
 
-            return View();
+            return View(data);
         }
 
 

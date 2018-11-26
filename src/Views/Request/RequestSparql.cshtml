@@ -1,3 +1,17 @@
+
+
 @{
+   
     ViewData["Title"] = "Request SPARQL";
 }
+
+<table>
+@foreach ( String data in @Model){
+
+        <tr>
+            <td style="border:solid"> @data </td>
+            
+        </tr>
+}
+
+</table>
