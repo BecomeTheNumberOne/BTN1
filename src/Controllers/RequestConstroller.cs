@@ -14,6 +14,8 @@ namespace BTN1.Controllers
 {
     public class RequestController : Controller{
 
+
+        // 
         public IActionResult RequestSparql()
         {
 
@@ -24,24 +26,52 @@ namespace BTN1.Controllers
             
 
             //Make a SELECT query against the Endpoint
-            SparqlResultSet results = endpoint.QueryWithResultSet("SELECT * WHERE {?iri a schema:Movie . ?iri foaf:name ?name .}");
+            SparqlResultSet results = endpoint.QueryWithResultSet("SELECT * WHERE {?iri a schema:Movie . ?iri foaf:name ?name .} Limit 20");
+            
+            
             var data=new List<String>();
-
+            
             foreach (SparqlResult result in results)
             {
-                Console.WriteLine(result.ToString());
+                //Console.WriteLine(result.ToString());
+
+                //IEnumerator<KeyValuePair<String, INode>> result2=result.GetEnumerator();
+
+                foreach (KeyValuePair<string, INode> kvp in result)
+                {
+                    Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                }
+                
                 data.Add(result.ToString());
 
             }
+            
 
+            /* 
+            List <SparqlResult> SRList = results.GetEnumerator();
+
+            foreach( SparqlResult result in SRList){
+
+                IList<KeyValuePair<string, INode>> result2=result.GetEnumerator();
+                
+                foreach(var element in result2) {
+
+                    Console.WriteLine(element);
+
+                }
+                
+                
+                data.Add(result.ToString());
+            }
+            */
             
-            
+
+
             Console.WriteLine("------------------------------------------------------------------");
 
             /* 
             //Make a DESCRIBE query against the Endpoint
             IGraph g = endpoint.QueryWithResultGraph("DESCRIBE");
-            //g.NamespaceMap.AddNamespace("schema", new Uri("http://schema.org/"));
             foreach (Triple t in g.Triples)
             {
                 Console.WriteLine(t.ToString());
