@@ -29,44 +29,32 @@ namespace BTN1.Controllers
             SparqlResultSet results = endpoint.QueryWithResultSet("SELECT * WHERE {?iri a schema:Movie . ?iri foaf:name ?name .} Limit 20");
             
             
-            var data=new List<String>();
+
+            //store result in var data. 
+            var data=new List<Data>();
             
             foreach (SparqlResult result in results)
             {
                 //Console.WriteLine(result.ToString());
 
                 //IEnumerator<KeyValuePair<String, INode>> result2=result.GetEnumerator();
-
+                Data _d=new Data();
                 foreach (KeyValuePair<string, INode> kvp in result)
                 {
+                    
                     Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                     
+                    if(kvp.Key=="iri"){
+                        _d.URL= kvp.Value.ToString();
+                    }else if(kvp.Key == "name"){
+                        _d.Name= kvp.Value.ToString();
+                    }
+                    
                 }
+                data.Add(_d);
                 
-                data.Add(result.ToString());
-
             }
             
-
-            /* 
-            List <SparqlResult> SRList = results.GetEnumerator();
-
-            foreach( SparqlResult result in SRList){
-
-                IList<KeyValuePair<string, INode>> result2=result.GetEnumerator();
-                
-                foreach(var element in result2) {
-
-                    Console.WriteLine(element);
-
-                }
-                
-                
-                data.Add(result.ToString());
-            }
-            */
-            
-
-
             Console.WriteLine("------------------------------------------------------------------");
 
             /* 

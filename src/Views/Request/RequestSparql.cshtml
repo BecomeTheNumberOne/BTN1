@@ -6,10 +6,22 @@
 }
 
 <table>
-@foreach ( String data in @Model){
+
+     <tr>
+            <th style="border:solid" > Nom  </th>
+            <th style="border:solid" > genre </th>
+            <th style="border:solid" > URL </th>
+    </tr> 
+    
+@foreach ( Data data in @Model){
+
+       
+
 
         <tr>
-            <td style="border:solid"> @data </td>
+            <td style="border:solid"> @data.Name </td>
+            <td style="border:solid"> @data.genre </td>
+            <td style="border:solid"> @data.URL </td>
             
         </tr>
 }
