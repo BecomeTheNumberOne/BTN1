@@ -31,3 +31,4 @@ G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\obj\Debug\netcoreapp2.1\BTN1.Views.pdb
 G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\obj\Debug\netcoreapp2.1\BTN1.dll
 G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\obj\Debug\netcoreapp2.1\BTN1.pdb
 G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\obj\Debug\netcoreapp2.1\BTN1.csproj.CopyComplete
+G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\obj\Debug\netcoreapp2.1\Razor\Views\Request\LoadFileG.g.cshtml.cs
