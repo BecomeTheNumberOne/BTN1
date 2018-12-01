@@ -70,6 +70,36 @@ namespace BTN1.Controllers
         }
 
 
+        public IActionResult LoadFileG(){
+
+            try
+            {
+                IGraph g = new Graph();
+                NTriplesParser ntparser = new NTriplesParser();
+
+                //Load using Filename
+                ntparser.Load(g, "Data/animelist_dataset.nt");
+            }
+            catch (RdfParseException parseEx)
+            {
+                //This indicates a parser error e.g unexpected character, premature end of input, invalid syntax etc.
+                Console.WriteLine("Parser Error");
+                Console.WriteLine(parseEx.Message);
+            }
+            catch (RdfException rdfEx)
+            {
+                //This represents a RDF error e.g. illegal triple for the given syntax, undefined namespace
+                Console.WriteLine("RDF Error");
+                Console.WriteLine(rdfEx.Message);
+            }
+
+            return View();
+
+            }
+
+
+
+
     }
 
 }
