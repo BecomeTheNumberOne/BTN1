@@ -9,6 +9,7 @@ using VDS.RDF;
 using VDS.RDF.Writing;
 using VDS.RDF.Parsing;
 using VDS.RDF.Query;
+using System.IO;
 
 namespace BTN1.Controllers
 {
@@ -72,26 +73,34 @@ namespace BTN1.Controllers
 
         public IActionResult LoadFileG(){
 
-            try
-            {
+            TripleStore store = new TripleStore();
+
+            
                 IGraph g = new Graph();
+
+
+
                 NTriplesParser ntparser = new NTriplesParser();
 
                 //Load using Filename
-                ntparser.Load(g, "Data/animelist_dataset.nt");
-            }
-            catch (RdfParseException parseEx)
-            {
-                //This indicates a parser error e.g unexpected character, premature end of input, invalid syntax etc.
-                Console.WriteLine("Parser Error");
-                Console.WriteLine(parseEx.Message);
-            }
-            catch (RdfException rdfEx)
-            {
-                //This represents a RDF error e.g. illegal triple for the given syntax, undefined namespace
-                Console.WriteLine("RDF Error");
-                Console.WriteLine(rdfEx.Message);
-            }
+                ntparser.Load(g, new StreamReader ("Data/animelist_dataset.nt"));
+
+                store.Add(g);
+
+                //Execute a raw SPARQL Query
+		        //Should get a SparqlResultSet back from a SELECT query
+		        Object results = store.ExecuteQuery("SELECT * WHERE {?iri a schema:Movie . ?iri foaf:name ?name .} Limit 20 ");
+                if (results is SparqlResultSet)
+                {
+                    //Print out the Results
+                    SparqlResultSet rset = (SparqlResultSet)results;
+                    foreach (SparqlResult result in rset)
+                    {
+                        Console.WriteLine(result.ToString());
+                    }
+		        }
+
+
 
             return View();
 
