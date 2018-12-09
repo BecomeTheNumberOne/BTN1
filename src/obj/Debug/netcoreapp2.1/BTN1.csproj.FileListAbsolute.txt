@@ -66,3 +66,4 @@ C:\Users\Sirzesx\Documents\Projets\Web\BTN1\src\obj\Debug\netcoreapp2.1\BTN1.Vie
 C:\Users\Sirzesx\Documents\Projets\Web\BTN1\src\obj\Debug\netcoreapp2.1\BTN1.dll
 C:\Users\Sirzesx\Documents\Projets\Web\BTN1\src\obj\Debug\netcoreapp2.1\BTN1.pdb
 C:\Users\Sirzesx\Documents\Projets\Web\BTN1\src\obj\Debug\netcoreapp2.1\BTN1.csproj.CopyComplete
+G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\obj\Debug\netcoreapp2.1\Razor\Views\Request\BingAPI.g.cshtml.cs

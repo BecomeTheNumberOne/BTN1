@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BTN1.Models;
@@ -10,6 +11,9 @@ using VDS.RDF.Writing;
 using VDS.RDF.Parsing;
 using VDS.RDF.Query;
 using System.IO;
+using Newtonsoft.Json.Linq;
+using static BTN1.Models.RequestAPI;
+
 
 namespace BTN1.Controllers
 {
@@ -106,9 +110,35 @@ namespace BTN1.Controllers
 
             }
 
+        public IActionResult BingAPI()
+        {
+
+            
+            const string searchTerm = "naruto";
+
+
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            Console.WriteLine("Searching images for: " + searchTerm + "\n");
+            //send a search request using the search term
+            SearchResult result = BingImageSearch(searchTerm);
+            //deserialize the JSON response from the Bing Image Search API
+            dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(result.jsonResult);
+
+            var firstJsonObj = jsonObj["value"][0];
+            Console.WriteLine("Title for the first image result: " + firstJsonObj["name"] + "\n");
+            //After running the application, copy the output URL into a browser to see the image. 
+            Console.WriteLine("URL for the first image result: " + firstJsonObj["webSearchUrl"] + "\n");
+
+            Console.Write("\nPress Enter to exit ");
+            Console.ReadLine();
+
+            return View();
+        }
 
 
 
-    }
+
+        }
 
 }
