@@ -110,7 +110,7 @@ namespace BTN1.Controllers
 
             }
 
-        public IActionResult BingAPI()
+        public IActionResult BingAPI() 
         {
 
             
@@ -128,16 +128,20 @@ namespace BTN1.Controllers
             var firstJsonObj = jsonObj["value"][0];
             Console.WriteLine("Title for the first image result: " + firstJsonObj["name"] + "\n");
             //After running the application, copy the output URL into a browser to see the image. 
-            Console.WriteLine("URL for the first image result: " + firstJsonObj["webSearchUrl"] + "\n");
+            Console.WriteLine("URL for the first image result: " + firstJsonObj["contentUrl"] + "\n");
 
-            Console.Write("\nPress Enter to exit ");
-            Console.ReadLine();
+            String url=firstJsonObj["contentUrl"]+"";
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFile(new Uri(url), @"G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\"+searchTerm+".jpeg");
+            }
+            
 
             return View();
         }
 
 
-
+        
 
         }
 
