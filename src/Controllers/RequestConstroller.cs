@@ -13,7 +13,9 @@ using VDS.RDF.Query;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using static BTN1.Models.RequestAPI;
-
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace BTN1.Controllers
 {
@@ -133,14 +135,21 @@ namespace BTN1.Controllers
             String url=firstJsonObj["contentUrl"]+"";
             using (WebClient client = new WebClient())
             {
-                client.DownloadFile(new Uri(url), @"G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\"+searchTerm+".jpeg");
+                client.DownloadFile(new Uri(url), @"G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\wwwroot\images\"+searchTerm+".jpeg");
             }
-            
 
-            return View();
+            
+            string file = @"G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\" + searchTerm + ".jpeg";
+           
+            return View(file);
         }
 
-
+        public IActionResult printImage()
+        {
+            
+            ViewBag.url="naruto.jpeg";
+            return View();
+        }
         
 
         }
