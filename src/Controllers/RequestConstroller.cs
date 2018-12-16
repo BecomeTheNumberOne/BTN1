@@ -82,26 +82,28 @@ namespace BTN1.Controllers
             TripleStore store = new TripleStore();
 
             
-                IGraph g = new Graph();
-
-
-
-                NTriplesParser ntparser = new NTriplesParser();
+            IGraph g = new Graph();
+            
+            NTriplesParser ntparser = new NTriplesParser();
 
                 //Load using Filename
-                ntparser.Load(g, new StreamReader ("Data/animelist_dataset.nt"));
-
-                store.Add(g);
+            ntparser.Load(g, new StreamReader ("Data/anime_dataset.nt"));
+            g.NamespaceMap.AddNamespace("schema", new Uri("http://schema.org/"));
+            store.Add(g);
 
                 //Execute a raw SPARQL Query
 		        //Should get a SparqlResultSet back from a SELECT query
-		        Object results = store.ExecuteQuery("SELECT * WHERE {?iri a schema:Movie . ?iri foaf:name ?name .} Limit 20 ");
+                
+		        Object results = store.ExecuteQuery("PREFIX schema:<http://schema.org/>SELECT * WHERE {?x rdf:type schema:Image;schema:name ?name.} Limit 20 ");
+
+                Console.WriteLine("------------------------");
                 if (results is SparqlResultSet)
                 {
                     //Print out the Results
                     SparqlResultSet rset = (SparqlResultSet)results;
                     foreach (SparqlResult result in rset)
                     {
+                        
                         Console.WriteLine(result.ToString());
                     }
 		        }
@@ -116,7 +118,7 @@ namespace BTN1.Controllers
         {
 
             
-            const string searchTerm = "naruto";
+            const string searchTerm = "300";
 
 
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -130,7 +132,7 @@ namespace BTN1.Controllers
             var firstJsonObj = jsonObj["value"][0];
             Console.WriteLine("Title for the first image result: " + firstJsonObj["name"] + "\n");
             //After running the application, copy the output URL into a browser to see the image. 
-            Console.WriteLine("URL for the first image result: " + firstJsonObj["contentUrl"] + "\n");
+            //Console.WriteLine("URL for the first image result: " + firstJsonObj["contentUrl"] + "\n");
 
             String url=firstJsonObj["contentUrl"]+"";
             using (WebClient client = new WebClient())
@@ -138,18 +140,10 @@ namespace BTN1.Controllers
                 client.DownloadFile(new Uri(url), @"G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\wwwroot\images\"+searchTerm+".jpeg");
             }
 
-            
-            string file = @"G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\" + searchTerm + ".jpeg";
-           
-            return View(file);
-        }
-
-        public IActionResult printImage()
-        {
-            
-            ViewBag.url="naruto.jpeg";
+            ViewBag.url = searchTerm +".jpeg";
             return View();
         }
+
         
 
         }
