@@ -55,7 +55,13 @@ namespace BTN1.Controllers
                     if(kvp.Key=="iri"){
                         _d.URL= kvp.Value.ToString();
                     }else if(kvp.Key == "name"){
-                        _d.Name= kvp.Value.ToString();
+                        string chaineModif = kvp.Value.ToString();
+                        string toRemove = "@";
+                        int i = chaineModif.IndexOf(toRemove);
+                        if (i >= 0)
+                        {
+                            _d.Name= chaineModif.Remove(i, chaineModif.Length-i);
+                        }
                     }
                     
                 }
@@ -74,7 +80,7 @@ namespace BTN1.Controllers
             }
             */
 
-            BingAPI(" Gilet jaune");
+            //BingAPI("Gilet jaune");
             return View(data);
         }
 
