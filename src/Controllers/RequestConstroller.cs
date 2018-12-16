@@ -16,6 +16,7 @@ using static BTN1.Models.RequestAPI;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using VDS.RDF.Writing.Formatting;
 
 namespace BTN1.Controllers
 {
@@ -33,7 +34,7 @@ namespace BTN1.Controllers
             
 
             //Make a SELECT query against the Endpoint
-            SparqlResultSet results = endpoint.QueryWithResultSet("SELECT * WHERE {?iri a schema:Movie . ?iri foaf:name ?name .} Limit 20");
+            SparqlResultSet results = endpoint.QueryWithResultSet("SELECT * WHERE {?iri a schema:Movie . ?iri foaf:name ?name .} Limit 100");
             
             
 
@@ -73,6 +74,7 @@ namespace BTN1.Controllers
             }
             */
 
+            BingAPI(" Gilet jaune");
             return View(data);
         }
 
@@ -87,16 +89,27 @@ namespace BTN1.Controllers
             NTriplesParser ntparser = new NTriplesParser();
 
                 //Load using Filename
-            ntparser.Load(g, new StreamReader ("Data/anime_dataset.nt"));
-            g.NamespaceMap.AddNamespace("schema", new Uri("http://schema.org/"));
-            store.Add(g);
+                ntparser.Load(g, new StreamReader ("Data/anime_dataset.nt"));
+                g.NamespaceMap.AddNamespace("schema", new Uri("http://schema.org/"));
+                store.Add(g);
+
+                /* 
+                ITripleFormatter formatter = new TurtleFormatter(g);
+                Console.WriteLine("------------------------");
+                //Print triples with this formatter
+                foreach (Triple t in g.Triples)
+                {
+                    Console.WriteLine(t.ToString());
+                }
+                */
+
 
                 //Execute a raw SPARQL Query
 		        //Should get a SparqlResultSet back from a SELECT query
                 
-		        Object results = store.ExecuteQuery("PREFIX schema:<http://schema.org/>SELECT * WHERE {?x rdf:type schema:Image;schema:name ?name.} Limit 20 ");
+		        Object results = store.ExecuteQuery("PREFIX schema: <http://schema.org/> SELECT * WHERE {?iri a schema:TVSeries .?iri schema:image ?image.}LIMIT 10");
 
-                Console.WriteLine("------------------------");
+                
                 if (results is SparqlResultSet)
                 {
                     //Print out the Results
@@ -107,18 +120,17 @@ namespace BTN1.Controllers
                         Console.WriteLine(result.ToString());
                     }
 		        }
-
-
+                
 
             return View();
 
             }
 
-        public IActionResult BingAPI() 
+        public IActionResult BingAPI(String search) 
         {
 
             
-            const string searchTerm = "300";
+            string searchTerm = search;
 
 
             Console.OutputEncoding = System.Text.Encoding.UTF8;
