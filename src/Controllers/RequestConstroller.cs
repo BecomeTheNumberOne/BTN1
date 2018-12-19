@@ -23,8 +23,33 @@ namespace BTN1.Controllers
     public class RequestController : Controller{
 
 
-        // 
-        public IActionResult RequestSparql()
+        public IActionResult Index()
+        {
+
+            return View();
+        }
+
+        public ActionResult Game()
+        {
+            //store result in var data. 
+            var data=new List<Data>();
+            RequestSparql(data);
+            var Ndata=new List<Data>();
+            Random rnd = new Random();
+            for(int i=0;i<10;i++){
+                int r=rnd.Next(data.Count);
+                Ndata.Add(data[r]);
+            }
+
+            foreach (Data element in Ndata){
+                
+                BingAPI(element.Name);
+                
+            }
+
+            return null;
+        }
+        public IActionResult RequestSparql(List<Data> data)
         {
 
             //Define a remote endpoint
@@ -38,8 +63,7 @@ namespace BTN1.Controllers
             
             
 
-            //store result in var data. 
-            var data=new List<Data>();
+            
             
             foreach (SparqlResult result in results)
             {
@@ -155,7 +179,7 @@ namespace BTN1.Controllers
             String url=firstJsonObj["contentUrl"]+"";
             using (WebClient client = new WebClient())
             {
-                client.DownloadFile(new Uri(url), @"G:\Cours\ING_CNAM\FIP2\Web\BTN1\src\wwwroot\images\"+searchTerm+".jpeg");
+                client.DownloadFile(new Uri(url), Directory.GetCurrentDirectory()+@"\wwwroot\images\"+searchTerm+".jpeg");
             }
 
             ViewBag.url = searchTerm +".jpeg";

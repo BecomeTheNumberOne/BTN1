@@ -1,0 +1,30 @@
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Become The Number One</h1>
+
+@using (Html.BeginForm("Game", "Request"))
+{
+    <p> Thème :
+    <select name="theme">
+    <option value="Films">Films</option>
+    </select>
+    </p>
+    <p> Nombre d'images :   
+    <select name="nbImages">
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+    </select>
+    </p>
+
+    <input type="submit" value="Jouer"/>
+
+}
+
+<!-- <p>
+    <a asp-action="Partie">Jouer</a>
+</p> --> 
